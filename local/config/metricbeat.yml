@@ -19,7 +19,7 @@ metricbeat.modules:
 
 - module: jolokia
   metricsets: ["jmx"]
-  hosts: ["localhost:8080", "localhost:8081"]
+  hosts: ["java-frontend:8080", "java-backend:8081"]
   username: admin
   password: secret
   namespace: "metrics"
@@ -40,7 +40,10 @@ metricbeat.modules:
           field: memory.heap_usage
         - attr: NonHeapMemoryUsage
           field: memory.non_heap_usage
-  jmx.instance: "{{ inventory_hostname }}"
+
+- module: apache
+  period: 10s
+  hosts: ["http://java-frontend:8080", "http://java-backend:8081"]
 
 - module: docker
   metricsets: ["cpu", "info", "memory", "network", "diskio", "container"]
