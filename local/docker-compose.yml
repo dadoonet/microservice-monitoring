@@ -163,6 +163,7 @@ services:
     container_name: mysql
     volumes:
       - mysql-log:/var/log/mysql
+      - ./sql:/docker-entrypoint-initdb.d
     networks: ['stack']
     ports: ['3306:3306']
     restart: on-failure
@@ -171,8 +172,10 @@ services:
     image: alpine:latest
     container_name: apm-agent-download
     command: sh -c 'cd /root/apm-agent ; wget https://repo1.maven.org/maven2/co/elastic/apm/elastic-apm-agent/$ELASTIC_APM_AGENT_VERSION/elastic-apm-agent-$ELASTIC_APM_AGENT_VERSION.jar'
+#    command: sh -c 'cp /mnt/apm-agent/elastic-apm-agent-$ELASTIC_APM_AGENT_VERSION.jar /root/apm-agent'
     volumes:
       - apm-agent:/root/apm-agent
+      - ../../localdemo/apm/:/mnt/apm-agent:ro
 
   java-backend:
     image: openjdk:8-stretch
