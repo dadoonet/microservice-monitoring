@@ -171,11 +171,11 @@ services:
   apm-agent-download:
     image: alpine:latest
     container_name: apm-agent-download
-    command: sh -c 'cd /root/apm-agent ; wget https://repo1.maven.org/maven2/co/elastic/apm/elastic-apm-agent/$ELASTIC_APM_AGENT_VERSION/elastic-apm-agent-$ELASTIC_APM_AGENT_VERSION.jar'
-#    command: sh -c 'cp /mnt/apm-agent/elastic-apm-agent-$ELASTIC_APM_AGENT_VERSION.jar /root/apm-agent'
+    command: sh -c '/mnt/scripts/download-apm-agent.sh $ELASTIC_APM_AGENT_VERSION /mnt/apm-agent /root/apm-agent'
     volumes:
       - apm-agent:/root/apm-agent
-      - ../../localdemo/apm/:/mnt/apm-agent:ro
+      - ./localdir:/mnt/apm-agent
+      - ./scripts:/mnt/scripts:ro
 
   java-backend:
     image: openjdk:8-stretch

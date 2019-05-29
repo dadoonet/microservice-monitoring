@@ -11,3 +11,6 @@ out/
 *.tfstate
 *.tfstate.lock.info
 
+# This one is use to download locally binary resources
+# This is uselful when you don't have an internet connection anymore
+/local/localdir
